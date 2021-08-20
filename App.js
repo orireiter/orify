@@ -43,7 +43,7 @@ const App = () => {
           style={backgroundStyle}
         >
           <Login />
-          <Text>ori hazak koren halash</Text>
+          <Text>cleanup</Text>
         </ScrollView>
       </NavigationContainer>
     </SafeAreaView>
