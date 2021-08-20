@@ -43,7 +43,6 @@ const App = () => {
           style={backgroundStyle}
         >
           <Login />
-          <Text>cleanup</Text>
         </ScrollView>
       </NavigationContainer>
     </SafeAreaView>
