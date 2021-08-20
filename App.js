@@ -16,6 +16,7 @@ import {
   StyleSheet,
   useColorScheme,
   View,
+  Text,
 } from "react-native";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
@@ -42,6 +43,7 @@ const App = () => {
           style={backgroundStyle}
         >
           <Login />
+          <Text>ori hazak koren halash</Text>
         </ScrollView>
       </NavigationContainer>
     </SafeAreaView>
