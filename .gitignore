@@ -59,3 +59,4 @@ buck-out/
 /ios/Pods/
 
 conf.js
+.prettierrc
