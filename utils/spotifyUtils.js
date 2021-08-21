@@ -16,7 +16,11 @@ export const fetchSpotifyTokens = async (codeStr) => {
 
   let responseData = fetch(url, requestOptions)
     .then((response) => response.json())
-    .then((responseJson) => responseJson);
+    .then((responseJson) => responseJson)
+    .catch((error) => {
+      console.log("error", error);
+      throw error;
+    });
 
   return responseData;
 };
