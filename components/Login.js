@@ -1,13 +1,35 @@
 import React from "react";
-import { View, Text, Pressable, Linking } from "react-native";
-import CONF from "../conf";
+import { Alert, View, Text, Pressable, Linking } from "react-native";
 
-const SPOTIFY_REGISTER_URL = `${CONF.SPOTIFY_AUTH_URL}?client_id=${CONF.SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${CONF.SPOTIFY_REDIRECT_URI}&scope=${CONF.SPOTIFY_RELEVANT_AUTH_SCOPE}`;
+import CONF from "../conf";
+import { storeData } from "../utils/storageUtils";
+import {
+  getSpotifyRegisterUrl,
+  fetchSpotifyTokens,
+} from "../utils/spotifyUtils";
+
+const handleUrlCallback = async ({ url }) => {
+  let urlSplittedArray = url.split(`${CONF.SPOTIFY_REDIRECT_URI}/?code=`);
+  let codeStr = urlSplittedArray[1];
+  if (!codeStr) {
+    Alert.alert("Error", "Something went wrong when returning from Spotify");
+    return;
+  }
+
+  fetchSpotifyTokens(codeStr)
+    .then((spotifyAccountDetails) =>
+      storeData("spotifyAccount", spotifyAccountDetails)
+    )
+    .then(() => Linking.removeEventListener("url", handleUrlCallback))
+    .catch((error) => Alert.alert("Error", error));
+
+  // todo if success, redirect to homepage, otherwise alert error.
+};
 
 export default function Login() {
-  Linking.addEventListener("url", ({ url }) => {
-    console.log(url);
-  });
+  Linking.addEventListener("url", handleUrlCallback);
+
+  const spotifyRegisterUrl = getSpotifyRegisterUrl();
 
   return (
     <View>
@@ -16,10 +38,9 @@ export default function Login() {
       </View>
       <View>
         <Text>orify</Text>
-        <Text>ori</Text>
       </View>
       <View>
-        <Pressable onPressIn={() => Linking.openURL(SPOTIFY_REGISTER_URL)}>
+        <Pressable onPressIn={() => Linking.openURL(spotifyRegisterUrl)}>
           <Text>Link Your Spotify Account</Text>
         </Pressable>
       </View>
