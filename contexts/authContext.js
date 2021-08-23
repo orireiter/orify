@@ -3,6 +3,7 @@ import { Linking, Alert, View, Text } from "react-native";
 
 import { storeData, getData } from "../utils/storageUtils";
 import { fetchSpotifyTokens } from "../utils/spotifyUtils";
+import Loading from "../components/Loading";
 import CONF from "../conf";
 
 export const AuthContext = React.createContext();
@@ -57,14 +58,7 @@ export function AuthProvider({ children }) {
   };
 
   if (isLoading) {
-    return (
-      <View>
-        <Text>Loading Loading Loading Loading Loading Loading Loading</Text>
-        <Text>Loading Loading Loading Loading Loading Loading Loading</Text>
-        <Text>Loading Loading Loading Loading Loading Loading Loading</Text>
-        <Text>Loading Loading Loading Loading Loading Loading Loading</Text>
-      </View>
-    );
+    return <Loading />;
   }
   return (
     <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>
